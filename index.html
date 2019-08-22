@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Demo</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/sass/build/index.css" type="text/css">
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div class="brand">
+                Sample Brand
+            </div>
+            <div class="cm-navbar-toggle" data-target="#nav-menu-toggle">
+                <button class="btn btn-light btn-sm">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="nav-group nav-menu" id="nav-menu-toggle">
+                <div class="nav-item">Contact Us</div>
+                <div class="nav-item">About Us</div>
+                <div class="nav-item">Documentation</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="panel">
+            <div class="object"></div>
+            <div class="object-2"></div>
+        </div>
+
+        <div class="panel">
+            <div class="msg msg-success"></div>
+            <div class="msg msg-alert"></div>
+            <div class="msg msg-warning"></div>
+
+            <div class="message-success">Message success</div>
+            <div class="message-alert">Message alert</div>
+            <div class="message-warning">Message warning</div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        var navBarElement = ".cm-navbar-toggle";
+        _initNavbarMenuHandler();
+
+        function _initNavbarMenuHandler() {
+            var target = $(navBarElement).attr("data-target");
+
+            $(window).on("resize", _navMenuHandler.bind(null, target));
+            $(navBarElement).on("click", _navbarMenuListener.bind(null, target));
+        }
+
+        function _navMenuHandler(target) {
+            var navBarToggle = $(navBarElement);
+
+            if (navBarToggle.is(":visible")) {
+
+                if ($(target).hasClass("on")) {
+                    _toggleNavMenu(true, target);
+                } else {
+                    $(target).height(0);
+                }
+
+            } else {
+                $(target).height("auto");
+            }
+        }
+
+        function _navbarMenuListener(target) {
+            var targetEl = $(target);
+
+            if (targetEl.hasClass("on")) {
+                targetEl.removeClass("on");
+                _toggleNavMenu(false, target);
+            } else {
+                targetEl.addClass("on");
+                _toggleNavMenu(true, target);
+            }
+        }
+
+        function _toggleNavMenu(boolVal, target) {
+            var targetFirstChild = parseFloat($(target + " .nav-item:first-child").outerHeight());
+            var targetChildCount = parseInt($(target + " .nav-item").length);
+            var targetEl = $(target);
+
+            if (boolVal) {
+                targetEl.height(targetFirstChild * targetChildCount);
+            } else {
+                targetEl.height(0);
+            }
+        }
+
+    });
+</script>
+</html>
